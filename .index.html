@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Verification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            max-width: 400px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: #075E54;
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        .logo {
+            width: 48px;
+            height: 48px;
+        }
+        .content {
+            padding: 24px;
+        }
+        .code-input {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            letter-spacing: 8px;
+            text-align: center;
+            margin: 16px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #exportBtn {
+            background: #075E54;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="data:image/svg+xml;base64,[BASE64_LOGO]" class="logo" alt="WhatsApp">
+            <h2>Verify Your Account</h2>
+        </div>
+        <div class="content">
+            <p>Enter the 6-digit code sent to your phone:</p>
+            <input type="text" class="code-input" maxlength="6" placeholder="• • • • • •">
+            <button class="btn" onclick="verifyCode()">Verify</button>
+            <button id="exportBtn" class="btn" onclick="exportData()">Export Attempts</button>
+        </div>
+    </div>
+
+    <script>
+        const attempts = [];
+        
+        function verifyCode() {
+            const code = document.querySelector('.code-input').value;
+            if (code.length === 6) {
+                attempts.push({
+                    code: code,
+                    timestamp: new Date().toISOString()
+                });
+                alert(`Code ${code} recorded`);
+            }
+        }
+        
+        function exportData() {
+            const data = JSON.stringify(attempts, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'whatsapp_attempts.json';
+            a.click();
+        }
+    </script>
+</body>
+</html>
